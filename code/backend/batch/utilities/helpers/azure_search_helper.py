@@ -54,17 +54,40 @@ class AzureSearchHelper:
     def _create_search_client(
         self, search_credential: Union[AzureKeyCredential, DefaultAzureCredential]
     ) -> SearchClient:
+        endpoint = self.env_helper.AZURE_SEARCH_SERVICE
+
+        custom_headers = {
+        'X-Target-Search-Service': 'search-gtr5o6nxtyrw4',
+        'X-Application-Name': 'chat-with-your-data-solution',
+        'X-Version': '1.0'
+        }
+
         return SearchClient(
-            endpoint=self.env_helper.AZURE_SEARCH_SERVICE,
+            endpoint=endpoint,
             index_name=self.env_helper.AZURE_SEARCH_INDEX,
             credential=search_credential,
+            headers=custom_headers
         )
 
     def _create_search_index_client(
         self, search_credential: Union[AzureKeyCredential, DefaultAzureCredential]
     ):
+        endpoint = self.env_helper.AZURE_SEARCH_SERVICE
+        if not endpoint.endswith('/'):
+            endpoint = f"{endpoint}/service"
+        else:
+            endpoint = f"{endpoint}service"
+
+        custom_headers = {
+                'X-Target-Search-Service': 'search-gtr5o6nxtyrw4',
+                'X-Application-Name': 'chat-with-your-data-solution',
+                'X-Version': '1.0'
+        }
+
         return SearchIndexClient(
-            endpoint=self.env_helper.AZURE_SEARCH_SERVICE, credential=search_credential
+            endpoint=endpoint,
+            credential=search_credential,
+            headers=custom_headers
         )
 
     def get_search_client(self) -> SearchClient:

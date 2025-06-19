@@ -48,7 +48,7 @@ param skuTier string = 'Basic'
   'PostgreSQL'
   'CosmosDB'
 ])
-param databaseType string = 'PostgreSQL'
+param databaseType string = 'CosmosDB'
 
 @description('Azure Cosmos DB Account Name')
 param azureCosmosDBAccountName string = 'cosmos-${resourceToken}'
@@ -447,7 +447,7 @@ module openai 'core/ai/cognitiveservices.bicep' = {
   scope: rg
   params: {
     name: azureOpenAIResourceName
-    location: location
+    location: 'eastus2'
     tags: tags
     sku: {
       name: azureOpenAISkuName

@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(level=os.environ.get("LOGLEVEL", "INFO").upper())
 queue_name = os.environ.get("DOCUMENT_PROCESSING_QUEUE_NAME", "doc-processing")
 
+logger.info("version: 3.1.0")
 
 def _get_file_name_from_message(message_body) -> str:
     return message_body.get(
